@@ -1,7 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; 
 
 public class FirstPersonController : MonoBehaviour
 {
@@ -12,12 +12,13 @@ public class FirstPersonController : MonoBehaviour
     public float JumpPower = 0;
     public List<GameObject> Floors;
 
+    private int playerPoints = 0; // Track the player's points
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
-
 
     void Update()
     {
@@ -44,6 +45,13 @@ public class FirstPersonController : MonoBehaviour
                 move.y = RB.velocity.y;
             RB.velocity = move;
         }
+
+        // Check if the player's points are equal to 3
+        if (playerPoints == 3)
+        {
+            // Load Scene 1
+            SceneManager.LoadScene(1);
+        }
     }
 
     public bool OnGround()
@@ -61,5 +69,10 @@ public class FirstPersonController : MonoBehaviour
     {
         Floors.Remove(other.gameObject);
     }
-}
 
+    // Method to add points to the player
+    public void AddPoints(int points)
+    {
+        playerPoints += points;
+    }
+}
